@@ -5,7 +5,7 @@ app.use(express.urlencoded({extended: true})); //body-parser 사용하기 위한
 
 //mongoDB 코드
 const MongoClient = require('mongodb').MongoClient;
-MongoClient.connect('mongodb+srv://july:<sysy2027>@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
+MongoClient.connect('mongodb+srv://july:sysy2027@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
     if (에러) return console.log(에러);
         //서버띄우는 코드 여기로 옮기기
         app.listen(8080, function(){ //파라미터1. 오픈할 포트번호

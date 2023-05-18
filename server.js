@@ -1,31 +1,32 @@
-// //1. express 라이브러리 첨부와 사용
-// const express = require('express');
-// const app = express();
-// app.use(express.urlencoded({extended: true})); //body-parser 사용하기 위한 코드
+//1. express 라이브러리 첨부와 사용
+const express = require('express');
+const app = express();
+app.use(express.urlencoded({extended: true})); //body-parser 사용하기 위한 코드
 
-// //mongoDB 코드
-// const MongoClient = require('mongodb').MongoClient;
-// MongoClient.connect('mongodb+srv://july:<sysy2027>@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
-//     if (에러) return console.log(에러);
-//         //서버띄우는 코드 여기로 옮기기
-//         app.listen(8080, function(){
-//         console.log('listening on 8080')
-//     });
-// })
-
-
-const express = require('express')
-app.use(express.urlencoded({ extended: true }));
-const app = express()
-const MongoClient = require('mongodb').MongoClient
-
-
+//mongoDB 코드
+const MongoClient = require('mongodb').MongoClient;
 MongoClient.connect('mongodb+srv://july:<sysy2027>@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
-  if (에러) return console.log(에러)
-  app.listen(8080, function() {
-    console.log('listening on 8080')
-  })
-})
+    if (에러) return console.log(에러);
+        //서버띄우는 코드 여기로 옮기기
+        app.listen(8080, function(){ //파라미터1. 오픈할 포트번호
+            console.log('hello 8080 server!')//파라미터2. 서버 오픈시 실행할 코드
+        });
+});
+
+
+// const express = require('express')
+// const app = express()
+// app.use(express.urlencoded({ extended: true }));
+
+// const MongoClient = require('mongodb').MongoClient
+
+
+// MongoClient.connect('mongodb+srv://july:<sysy2027>@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority', function(에러, client){
+//   if (에러) return console.log(에러)
+//   app.listen(8080, function() {
+//     console.log('listening on 8080')
+//   })
+// });
 
 
 

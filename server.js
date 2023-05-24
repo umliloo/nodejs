@@ -64,7 +64,7 @@ app.post('/add', function(요청, 응답) {
     응답.send('post collection으로 전송완료');
     console.log(요청.body.date);
     console.log(요청.body.title);
-    db.collection('post').insertOne({날짜 : 요청.body.date, 제목 : 요청.body.title}, function(){
+    db.collection('post').insertOne({_id : 총게시물갯수 + 1, 날짜 : 요청.body.date, 제목 : 요청.body.title}, function(){
         console.log('날짜와 제목 저장완료')
     });
 }); 

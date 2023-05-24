@@ -76,6 +76,4 @@ app.get('/list', function(요청, 응답) {
         console.log(결과);
         응답.render('list.ejs', {posts : 결과});
     });
-
-    
 }); 

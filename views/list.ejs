@@ -44,13 +44,15 @@
           </form>
         </div>
       </nav>
+      <!-- 반복문으로 서버의 데이터 갯수만큼 출력 하기 -->
+      <% for (var i = 0; i < posts.length; i++){ %>
+          <h7 class="container mt-4">title : <%= posts[i].제목 %></h7>
+          <h7 class="container mt-4">date : <%= posts[i].날짜 %></h7><br>
+      <% } %>
 
-  <h7 class="container mt-4">title : <%= posts[0].제목 %></h7>
-  <h7 class="container mt-4">date : <%= posts[0].날짜 %></h7><br>
-  <h7 class="container mt-4">title : <%= posts[1].제목 %></h7>
-  <h7 class="container mt-4">date : <%= posts[1].날짜 %></h7>
 
 
+  
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

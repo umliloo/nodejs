@@ -32,7 +32,7 @@ MongoClient.connect('mongodb+srv://july:sysy2027@cluster0.acwyrqh.mongodb.net/?r
 
 //get 요청 처리하는 기계
 app.get('/pet', function(요청, 응답) { 
-    응답.send('펫용품 사시오')
+    응답.send('pet store!')
   })
 
 
@@ -64,8 +64,22 @@ app.post('/add', function(요청, 응답) {
     응답.send('post collection으로 전송완료');
     console.log(요청.body.date);
     console.log(요청.body.title);
-    db.collection('post').insertOne({_id : 총게시물갯수 + 1, 날짜 : 요청.body.date, 제목 : 요청.body.title}, function(){
-        console.log('날짜와 제목 저장완료')
+    db.collection('counter').findOne({name : '게시물 갯수'}, function(에러, 결과){//counter라는 collection에서 name :'게시물 갯수'인 데이터를 찾아달라. findOne() 1개 찾는 함수
+        console.log(결과.totalPost);
+        var 총게시물갯수 = 결과.totalPost;
+
+        //_id값에 총게시물갯수+1 적용
+        db.collection('post').insertOne({_id : 총게시물갯수 + 1, 날짜 : 요청.body.date, 제목 : 요청.body.title}, function(){
+            console.log('날짜와 제목 저장완료');
+
+            //counter안의 totalPost +1 시켜야함
+            db.collection('counter').updateOne({name: '게시물 갯수'}, {$set : {totalPost: 1}}, function(){//updateOne() : DB데이터 수정해주는 함수, set operator : {$set : {totalPost: 바꿀 값}}
+
+            });
+        });
+
+        
+
     });
 }); 
 

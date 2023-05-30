@@ -62,32 +62,29 @@ app.get('/write', function(요청, 응답) {
 //어떤 사람이 /add로 post 요청을 하면 데이터 2개(날짜, 제목)을 보내주는데, 이때 post collection을 저장하기
 app.post('/add', function(요청, 응답) {
     응답.send('post collection으로 전송완료');
-    console.log(요청.body.date);
-    console.log(요청.body.title);
+
     db.collection('counter').findOne({name : '게시물 갯수'}, function(에러, 결과){//counter라는 collection에서 name :'게시물 갯수'인 데이터를 찾아달라. findOne() 1개 찾는 함수
-        console.log(결과.totalPost);
+        // console.log(결과.totalPost);
         var 총게시물갯수 = 결과.totalPost;
 
         //_id값에 총게시물갯수+1 적용
-        db.collection('post').insertOne({_id : 총게시물갯수 + 1, 날짜 : 요청.body.date, 제목 : 요청.body.title}, function(){
+        db.collection('post').insertOne({_id : 총게시물갯수 + 1, 날짜 : 요청.body.date, 제목 : 요청.body.title}, function(에러, 결과){
             console.log('날짜와 제목 저장완료');
 
             //counter안의 totalPost +1 시켜야함
-            db.collection('counter').updateOne({name: '게시물 갯수'}, {$set : {totalPost: 1}}, function(){//updateOne() : DB데이터 수정해주는 함수, set operator : {$set : {totalPost: 바꿀 값}}
+            db.collection('counter').updateOne({name: '게시물 갯수'}, { $inc: {totalPost: 1} }, function(에러, 결과){//updateOne() : DB데이터 수정해주는 함수, set operator : {$set : {totalPost: 바꿀 값}}
+                 if(에러){return console.log(에러)}
+                //  응답.send('전송완료!!');
+            })
+        })
+    })
+})
 
-            });
-        });
-
-        
-
-    });
-}); 
-
-// get요청으로 /list로 접속하면 실제 db의 데이터들의 html을 보여주자
-app.get('/list', function(요청, 응답) { 
-    //1. DB에 저장된 post라는 collection안의 [모든 데이터]를 꺼내자
-    db.collection('post').find().toArray(function(에러, 결과){
-        console.log(결과);
-        응답.render('list.ejs', {posts : 결과});
-    });
-}); 
+// // get요청으로 /list로 접속하면 실제 db의 데이터들의 html을 보여주자
+// app.get('/list', function(요청, 응답) { 
+//     //1. DB에 저장된 post라는 collection안의 [모든 데이터]를 꺼내자
+//     db.collection('post').find().toArray(function(에러, 결과){
+//         console.log(결과);
+//         응답.render('list.ejs', {posts : 결과});
+//     });
+// }); 

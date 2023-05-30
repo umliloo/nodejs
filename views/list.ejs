@@ -23,7 +23,7 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
             </li>
-            <!-- <li class="nav-item dropdown">
+            <!-- <li class="nav-item dropdown">ㄴ
               <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
                 Dropdown
               </a>
@@ -45,16 +45,37 @@
         </div>
       </nav>
       <!-- 반복문으로 서버의 데이터 갯수만큼 출력 하기 -->
-      <% for (var i = 0; i < posts.length; i++){ %>
-          <h7 class="container mt-4">title : <%= posts[i].제목 %></h7>
-          <h7 class="container mt-4">date : <%= posts[i].날짜 %></h7><br>
-      <% } %>
+          
+      
+
+      <ul class="list-group">
+        <% for (var i = 0; i < posts.length; i++){ %>
+        <li class="list-group-item">
+            <h7 class="container mt-4">title : <%= posts[i].제목 %></h7><br>
+            <h7 class="container mt-4">date : <%= posts[i].날짜 %></h7>
+            <button>삭제</button><br>
+        </li>
+        <% } %>
+      </ul>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script>
+        //제이쿼리 문법으로 ajax 요청
+        $.ajax({
+          method : 'DELETE', //새로고침없이 DELETE 요청
+          url : '/delete', //요청 경로
+          data :'게시물번호' //요청과 함께 보낼데이터
+        }).done(function(결과){
+          //요청이 성공했을때 실행할 코드
+        }).fail(function(에러){
+          //요청이 실패했을때 실행할 코드
+        });
+
+      </script>
 
 
 
   
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 </body>

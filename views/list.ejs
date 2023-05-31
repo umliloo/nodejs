@@ -63,7 +63,7 @@
         $.ajax({
           method : 'DELETE', //새로고침없이 DELETE 요청
           url : '/delete', //요청 경로
-          data :'게시물번호' //요청과 함께 보낼데이터
+          data :{_id : 1} //요청과 함께 보낼데이터
         }).done(function(결과){
           //요청이 성공했을때 실행할 코드
         }).fail(function(에러){

@@ -93,5 +93,7 @@ app.get('/list', function(요청, 응답) {
 app.delete('/delete', function(요청, 응답){
     console.log(요청.body);
     //요청.body에 포함된 게시물번호를 가진 글을 DB에서 삭제
-    db.collection('post').deleteOne({})
+    db.collection('post').deleteOne({삭제할데이터}, function(){
+
+    })
 })

@@ -53,28 +53,26 @@
         <li class="list-group-item">
             <h7 class="container mt-4">title : <%= posts[i].제목 %></h7><br>
             <h7 class="container mt-4">date : <%= posts[i].날짜 %></h7>
-            <button>삭제</button><br>
+            <button class="delete" data-id="<%= posts[i]._id %>">삭제</button><br><!-- button태그에 data-id담기 -->
         </li>
         <% } %>
       </ul>
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script>
-        //제이쿼리 문법으로 ajax 요청
-        $.ajax({
-          method : 'DELETE', //새로고침없이 DELETE 요청
-          url : '/delete', //요청 경로
-          data :{_id : 1} //요청과 함께 보낼데이터
-        }).done(function(결과){
-          //요청이 성공했을때 실행할 코드
-        }).fail(function(에러){
-          //요청이 실패했을때 실행할 코드
+        $('.delete').click(function(e){ //button의 class에 이벤트
+            //제이쿼리 문법으로 ajax 요청
+            $.ajax({
+              method : 'DELETE', //새로고침없이 DELETE 요청
+              url : '/delete', //요청 경로
+              data :{_id : e.target.dataset.id} //요청과 함께 보낼데이터
+            }).done(function(결과){
+              //요청이 성공했을때 실행할 코드
+            }).fail(function(에러){
+              //요청이 실패했을때 실행할 코드
+            });
         });
-
       </script>
 
-
-
-  
 
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>

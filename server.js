@@ -88,12 +88,13 @@ app.get('/list', function(요청, 응답) {
         응답.render('list.ejs', {posts : 결과});
     });
 }); 
-
+4      
 //delete 요청
 app.delete('/delete', function(요청, 응답){
     console.log(요청.body);
+    요청.body._id = parseInt(요청.body._id); //서버에 요청시 문자로 전달되는 _id값을 숫자로 변환하는 함수 parseInt 
     //요청.body에 포함된 게시물번호를 가진 글을 DB에서 삭제
-    db.collection('post').deleteOne({삭제할데이터}, function(){
-
+    db.collection('post').deleteOne(요청.body, function(에러, 결과){ //deleteOne({삭제할 항목}, function(){삭제 후 실행될 코드})
+        console.log('삭제완료');
     })
 })

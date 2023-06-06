@@ -60,6 +60,10 @@
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script>
         $('.delete').click(function(e){ //button의 class에 이벤트
+            var 글번호 = e.target.dataset.id; //e.target은 지금 클릭한 곳을 가리킴
+            var 지금누른거 = $(this); //this는 지금 이벤트가 동작하는 곳을 가리킴
+
+
             //제이쿼리 문법으로 ajax 요청
             $.ajax({
               method : 'DELETE', //새로고침없이 DELETE 요청
@@ -67,8 +71,14 @@
               data :{_id : e.target.dataset.id} //요청과 함께 보낼데이터
             }).done(function(결과){
               //요청이 성공했을때 실행할 코드
-            }).fail(function(에러){
+              //페이지 새로고임 + 삭제버튼 누룬 li 요소 제거
+              console.log('성공하면 보이는 문구');
+              지금누른거.parent('li').fadeOut();
+
+            }).fail(function(xhr, textStatus, errorThrown){
               //요청이 실패했을때 실행할 코드
+              console.log(xhr, textStatus, errorThrown);
+              //xhr: ?, textStatus: 응답 코드, errorThrown: 에러메시지 출력
             });
         });
       </script>

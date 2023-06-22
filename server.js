@@ -101,6 +101,10 @@ app.delete('/delete', function(요청, 응답){
 })
 
 // /detail로 접속하면 detail.ejs 보여줌
-app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값에 맞는 페이지를 보여줌
-    응답.render('detail.ejs', {이런이름으로 : 이런데이터를})
+app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(파라미터)에 맞는 페이지를 보여줌
+    db.collection('post').findOne({_id : }, function(에러, 결과){
+        console.log(결과);
+        응답.render('detail.ejs', {이런이름으로 : 이런데이터를})
+
+    })
 })

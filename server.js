@@ -47,7 +47,7 @@ app.get('/write', function(요청, 응답) {
 }); 
 
 //add 경로로 form 내용 서버에 POST 방식으로 전달
-// app.post('/add', function(요청, 응답) { //중요! input에 적은 내용은 [요청]에 저장됨
+// app.post('/add', function(요청, 응답) { //★★★★★중요! input에 적은 내용은 [요청]에 저장됨
 //     console.log(요청.body);
 //     응답.send('전송완료')
 // }); 
@@ -98,4 +98,9 @@ app.delete('/delete', function(요청, 응답){
         console.log('삭제완료');//터미널창에 '삭제완료' 보여짐
         응답.status(400).send({message : "성공함"});//서버에서 응답 요청해주는 법
     })
+})
+
+// /detail로 접속하면 detail.ejs 보여줌
+app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값에 맞는 페이지를 보여줌
+    응답.render('detail.ejs', {이런이름으로 : 이런데이터를})
 })

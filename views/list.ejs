@@ -6,57 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <title>Document</title>
+  <link rel="stylesheet" href="/public/main.css">
 </head>
 <body>
   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <!-- <li class="nav-item dropdown">ㄴ
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-      <!-- 반복문으로 서버의 데이터 갯수만큼 출력 하기 -->
-          
-      
+      <%- include('nav.html') %>
 
-      <ul class="list-group">
-        <% for (var i = 0; i < posts.length; i++){ %>
-        <li class="list-group-item">
-            <h7 class="container mt-4">title : <%= posts[i].제목 %></h7><br>
-            <h7 class="container mt-4">date : <%= posts[i].날짜 %></h7>
-            <button class="delete" data-id="<%= posts[i]._id %>">삭제</button><br><!-- button태그에 data-id담기 -->
-        </li>
-        <% } %>
-      </ul>
+      <!-- 반복문으로 서버의 데이터 갯수만큼 출력 하기 -->
+      <h4 class="text-center mt-3">리스트</h4>
+      <div class="container">
+        <ul class="list-group">
+          <% for (var i = 0; i < posts.length; i++){ %>
+          <li class="list-group-item">
+              <h7>title : <%= posts[i].제목 %></h7><br>
+              <h7>date : <%= posts[i].날짜 %></h7><br>
+              <button class="btn btn-danger delete" data-id="<%= posts[i]._id %>">삭제</button><br><!-- button태그에 data-id담기 -->
+          </li>
+          <% } %>
+        </ul>
+      </div>
       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
       <script>
         $('.delete').click(function(e){ //button의 class에 이벤트

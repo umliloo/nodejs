@@ -40,13 +40,13 @@ app.get('/pet', function(요청, 응답) {
 // / 경로로 접속하면 index.html을 sendFile하는 기계
 app.get('/', function(요청, 응답) { 
     //응답.sendFile(__dirname +'/index.html') //dirname:현재파일의 경로/
-    응답.render('index.ejs', {posts : 결과});
+    응답.render('index.ejs');
 }); 
 
 // /write 경로로 접속하면 write.html을 sendFile하는 기계
 app.get('/write', function(요청, 응답) { 
     //응답.sendFile(__dirname +'/write.html') //dirname:현재파일의 경로
-    응답.render('write.ejs', {posts : 결과});
+    응답.render('write.ejs');
 }); 
 
 //add 경로로 form 내용 서버에 POST 방식으로 전달

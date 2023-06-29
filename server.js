@@ -99,7 +99,7 @@ app.delete('/delete', function(요청, 응답){
     //요청.body에 포함된 게시물번호를 가진 글을 DB에서 삭제
     db.collection('post').deleteOne(요청.body, function(에러, 결과){ //deleteOne({삭제할 항목}, function(){삭제 후 실행될 코드})
         console.log('삭제완료');//터미널창에 '삭제완료' 보여짐
-        응답.status(400).send({message : "성공함"});//서버에서 응답 요청해주는 법
+        응답.status(200).send({message : "성공함"});//서버에서 응답 요청해주는 법
     })
 })
 

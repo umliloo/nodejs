@@ -103,7 +103,7 @@ app.delete('/delete', function(요청, 응답){
     })
 })
 
-// /detail로 접속하면 detail.ejs 보여줌
+// /detail로 접속하면 detail.ejs 렌더링
 app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(파라미터)에 맞는 페이지를 보여줌
     db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){ //요청.params.id URL의 파라미터 중 id라는 이름을 가진 것 findOne
         console.log(결과); //findOne으로 찾은 데이터는 결과에 저장
@@ -114,6 +114,9 @@ app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(
 })
 
 // /edit으로 접속하면 edit.ejs를 렌더링
-app.get('/edit:id', function(요청, 응답){
-    응답.render('edit.ejs', {})
+app.get('/edit:id', function(요청, 응답){ //edit:id는 _id : 요청.params.id과 같다
+    db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){
+        응답.render('edit.ejs', { post : 결과 }); 
+
+    })
 });

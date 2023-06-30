@@ -4,6 +4,8 @@ app.use(express.urlencoded({extended: true})); //body-parser 사용하기 위한
 const MongoClient = require('mongodb').MongoClient;//mongoDB 코드
 app.set('view engine', 'ejs');
 app.use('/public', express.static('public')); //static파일을 보관하기 위해 public 폴더 사용 명시
+const methodOverride = require('method-override') //method-override를 사용하기 위한 코드
+app.use(methodOverride('_method'))
 
 //원하는 포트(8080)에 서버를 오픈하기 ~ MongoClient 코드 안쪽으로 이동시켜둠
 // app.listen(8080, function(){ //파라미터1. 오픈할 포트번호
@@ -114,9 +116,9 @@ app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(
 })
 
 // /edit으로 접속하면 edit.ejs를 렌더링
-app.get('/edit:id', function(요청, 응답){ //edit:id는 _id : 요청.params.id과 같다
-    db.collection('post').findOne({_id : parseInt(요청.params.id)}, function(에러, 결과){
-        응답.render('edit.ejs', { post : 결과 }); 
-
+app.get('/edit/:id', function(요청, 응답){ //edit/:id는 _id : 요청.params.id과 같다
+    db.collection('post').findOne({ _id :  parseInt(요청.params.id) }, function(에러, 결과){
+        응답.render('edit.ejs', { post : 결과 })
+        console.log(결과)
     })
 });

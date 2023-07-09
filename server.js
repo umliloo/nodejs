@@ -118,7 +118,14 @@ app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(
 // /edit으로 접속하면 edit.ejs를 렌더링
 app.get('/edit/:id', function(요청, 응답){ //edit/:id는 _id : 요청.params.id과 같다
     db.collection('post').findOne({ _id :  parseInt(요청.params.id) }, function(에러, 결과){
-        응답.render('edit.ejs', { post : 결과 })
+        응답.render('edit.ejs', { post : 결과 }) //edit.ejs 파일에서 결과를 post라는 이름으로 이용가능하다
         console.log(결과)
     })
 });
+
+app.put('/edit', function(요청, 응답){ //_id : 요청.body.id ==> input중 name 속성 이름이 id인 것
+    db.collection('post').updateOne({ _id : parseInt(요청.body.id) }, {$set : { 제목 : 요청.body.title, 날짜 : 요청.body.date }}, function(에러, 결과){
+        console.log('수정되었습니다')
+        응답.redirect('/list')
+    })
+})

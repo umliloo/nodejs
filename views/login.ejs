@@ -8,21 +8,19 @@
   <title>Document</title>
 </head>
 <body>
-  <h4 class="container mt-4 font-center" ><strong>write</strong></h4>
+  <h4 class="container mt-4 font-center" ><strong>login</strong></h4>
 
   <div class="container mt-3">
-    <form action="/edit?_method=PUT" method="POST"> <!-- /add라는 경로로 POST요청을 하는 form이라는 명시 -->
+    <form action="/login" method="POST"> <!-- /add라는 경로로 POST요청을 하는 form이라는 명시 -->
         <div class="form-group">
-      
-          <label>To do</label>
-          <input type="text" value="<%= post._id %>" name="id" style="display: none;">
-          <input value="<%= post.제목 %>" type="text" class="form-control" name="title">
+          <label>ID</label>
+          <input type="text" class="form-control" name="id"> <!-- name속성 작성하기 -->
         </div>
         <div class="form-group">
-          <label>date</label>
-          <input value="<%= post.날짜 %>" type="text" class="form-control" name="date">
+          <label>PASSWORD</label>
+          <input type="text" class="form-control" name="pw"><!-- name속성 작성하기 -->
         </div>
-        <button type="submit" class="btn btn-outline-secondary">Submit</button>
+        <button type="submit" class="btn btn-outline-secondary">LOGIN</button>
       </form> 
   </div>
 

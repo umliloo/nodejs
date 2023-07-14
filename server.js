@@ -118,7 +118,63 @@ app.get('/detail/:id', function(요청, 응답){ //detail에 접속하면 id값(
 // /edit으로 접속하면 edit.ejs를 렌더링
 app.get('/edit/:id', function(요청, 응답){ //edit/:id는 _id : 요청.params.id과 같다
     db.collection('post').findOne({ _id :  parseInt(요청.params.id) }, function(에러, 결과){
-        응답.render('edit.ejs', { post : 결과 })
+        응답.render('edit.ejs', { post : 결과 }) //edit.ejs 파일에서 결과를 post라는 이름으로 이용가능하다
         console.log(결과)
     })
 });
+
+app.put('/edit', function(요청, 응답){ //_id : 요청.body.id ==> input중 name 속성 이름이 id인 것
+    db.collection('post').updateOne({ _id : parseInt(요청.body.id) }, {$set : { 제목 : 요청.body.title, 날짜 : 요청.body.date }}, function(에러, 결과){
+        console.log('수정되었습니다')
+        응답.redirect('/list')
+    })
+})
+
+//로그인 페이지 만들기
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+//app.use 부분은 미들웨어. 미들웨어란? 요청과 응답 사이에 뭐가를 실행시키는 코드
+app.use(session({secret : '비밀코드', resave : true, saveUninitialized: false}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/login', function(요청, 응답){
+    응답.render('login.ejs')
+});
+
+app.post('/login', passport.authenticate('local', {
+    failureRedirect : '/fail' //실패했을때 이곳으로 리다이렉트
+}), function(요청, 응답){
+    응답.redirect('/')//redirect('이곳으로 리다이렉트')
+});
+
+//아이디와 비밀번호를 입력했을때 
+passport.use(new LocalStrategy({
+    usernameField: 'id', //.ejs의 name값
+    passwordField: 'pw', //.ejs의 name값
+    session: true, //세션으로 저장할건지 참/거짓 여부
+    passReqToCallback: false, //아이디/비밀번호 외의 다른 정보검사가 필요한지 여부
+  }, function (입력한아이디, 입력한비번, done) {//아래부터 사용자의 아이디/비밀번호를 검증하는 코드
+    //console.log(입력한아이디, 입력한비번);
+    db.collection('login').findOne({ id: 입력한아이디 }, function (에러, 결과) {
+      if (에러) return done(에러)
+  
+      if (!결과) return done(null, false, { message: '존재하지않는 아이디요' })//일치하는 아이디 없을때==결과에 아무것도 없을때
+      if (입력한비번 == 결과.pw){//일치하는 아이디 있을때
+        return done(null, 결과)
+      } else {
+        return done(null, false, { message: '비번틀렸어요' })
+      }
+    })
+  }));
+  
+  //로그인 세션을 유지시킬려면
+  passport.serializeUser(function (user, done) {//유저의 정보를 시리얼라이즈 하는 것 user에는 검증때 리턴된 [결과]가 들어감
+    done(null, user.id)
+  });
+  
+  passport.deserializeUser(function (아이디, done) {
+    done(null, {})
+  }); 

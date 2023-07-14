@@ -150,6 +150,20 @@ app.post('/login', passport.authenticate('local', {
     응답.redirect('/')//redirect('이곳으로 리다이렉트')
 });
 
+app.get('/mypage', 로그인했니, function(요청, 응답){
+    console.log(요청.user) //passport.deserializeUser에서 보낸 유저의 개인정보
+    응답.render('mypage.ejs', {사용자 : 요청.user})
+})
+
+function 로그인했니(요청, 응답, next){ // /mypage 미들웨어
+    if(요청.user){
+        next()
+    } else {
+        응답.send('로그인하십시오')
+    }
+}
+
+
 //아이디와 비밀번호를 입력했을때 
 passport.use(new LocalStrategy({
     usernameField: 'id', //.ejs의 name값
@@ -175,6 +189,9 @@ passport.use(new LocalStrategy({
     done(null, user.id)
   });
   
-  passport.deserializeUser(function (아이디, done) {
-    done(null, {})
+  passport.deserializeUser(function (아이디, done) {//아이디는 serializeUser의 user.id
+    //DB에서 user.id로 유저를 찾은 후 세션아이디를 바탕으로 개인정보를 아래의 {}에 출력. 마이페이지 내의 각종 정보들을 가지고 올 수 있다
+    db.collection('login').findOne({id : 아이디}, function(에러, 결과){
+        done(null, 결과)
+    })
   }); 

@@ -6,6 +6,7 @@ app.set('view engine', 'ejs');
 app.use('/public', express.static('public')); //static파일을 보관하기 위해 public 폴더 사용 명시
 const methodOverride = require('method-override') //method-override를 사용하기 위한 코드
 app.use(methodOverride('_method'))
+require('dotenv').config()
 
 //원하는 포트(8080)에 서버를 오픈하기 ~ MongoClient 코드 안쪽으로 이동시켜둠
 // app.listen(8080, function(){ //파라미터1. 오픈할 포트번호
@@ -13,20 +14,13 @@ app.use(methodOverride('_method'))
 // })
 
 var db;//전역변수 만들기
-MongoClient.connect('mongodb+srv://july:sysy2027@cluster0.acwyrqh.mongodb.net/?retryWrites=true&w=majority',{ useUnifiedTopology: true }, function(에러, client){
+MongoClient.connect(process.env.DB_URL, { useUnifiedTopology: true }, function(에러, client){
         if (에러) return console.log(에러);
 
         db = client.db('todoapp');//todoapp 이라는 database에 접속 요청 명령
 
-        //DB에 자료 추가하는 3줄 코드
-        // db.collection('post').insertOne({이름 : 'Jeon', _id : 200}, function(에러, 결과){
-        //     //post라는 collection에 저장
-        //     //insertOne(저장할데이터, 콜백함수)
-        //     console.log('저장완료');
-        // });
-
-        //서버띄우는 코드 여기로 옮기기
-        app.listen(8080, function(){ //파라미터1. 오픈할 포트번호
+        //서버띄우는 코드
+        app.listen(process.env.PORT, function(){ //파라미터1. 오픈할 포트번호
             console.log('hello 8080 server!')//파라미터2. 서버 오픈시 실행할 코드
         });
 });

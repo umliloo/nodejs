@@ -83,10 +83,26 @@ app.post('/add', function(요청, 응답) {
 app.get('/list', function(요청, 응답) { 
     //1. DB에 저장된 post라는 collection안의 [모든 데이터]를 꺼내자
     db.collection('post').find().toArray(function(에러, 결과){
-        console.log(결과);
+        // console.log(결과);
         응답.render('list.ejs', {posts : 결과});
     });
 }); 
+
+app.get('/search', (요청, 응답)=>{
+    console.log(요청.query);
+    db.collection('post').find( { $text : { $search: 요청.query.value }} ).toArray((에러, 결과)=>{
+      console.log(결과)
+      응답.render('search.ejs', {posts : 결과})
+    })
+  })
+// app.get('/search', (요청, 응답)=>{
+//     console.log(요청.query);
+//     db.collection('post').find( { 제목 : 요청.query.value }).toArray((에러, 결과)=>{
+//       console.log(결과)
+//       응답.render('search.ejs', {posts : 결과})
+//     })
+//   })
+
 
 //delete 요청
 app.delete('/delete', function(요청, 응답){
@@ -149,6 +165,8 @@ app.get('/mypage', 로그인했니, function(요청, 응답){
     응답.render('mypage.ejs', {사용자 : 요청.user})
 })
 
+
+
 function 로그인했니(요청, 응답, next){ // /mypage 미들웨어
     if(요청.user){
         next()
@@ -189,3 +207,4 @@ passport.use(new LocalStrategy({
         done(null, 결과)
     })
   }); 
+

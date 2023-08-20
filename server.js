@@ -243,7 +243,7 @@ passport.use(new LocalStrategy({
         응답.render('chat.ejs', {data : 결과})
       })
     });
-    
+
     app.post('/chatroom', 로그인했니, function(요청, 응답){
 
       var 저장할거 = {
@@ -258,5 +258,15 @@ passport.use(new LocalStrategy({
     });
 
 
-
-      
+    app.post('/message', 로그인했니, function(요청, 응답){
+      var 저장할거 = {
+        parent : 요청.body.parent,
+        userid : 요청.user._id,
+        content : 요청.body.content,
+        date : new Date(),
+      }
+      db.collection('message').insertOne(저장할거)
+      .then((결과)=>{
+        응답.send(결과);
+      })
+    }); 

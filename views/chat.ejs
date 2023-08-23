@@ -100,5 +100,20 @@ $('.list-group-item').click(function (){
    $(this).css('background-color', '#eee');
    지금누른채팅방id = $(this).attr('data-id');
 });
+
+var 지금누른채팅방id;
+var eventSource;   //일단변수 
+
+$('.list-group-item').click(function(){
+  지금누른채팅방id = this.dataset.id;
+
+  //프론트엔드에서 실시간 소통채널 여는법 
+  eventSource = new EventSource('/message/' + 지금누른채팅방id);
+  eventSource.addEventListener('test', function (e){
+    console.log(e.data);
+  });
+
+});
 </script>
+
 </html>

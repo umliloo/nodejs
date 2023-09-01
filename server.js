@@ -271,19 +271,30 @@ passport.use(new LocalStrategy({
       })
     }); 
 
-    app.get('/message/:parentid', 로그인했니, function(요청, 응답){
-      //지속적인 소통 채널 개통
+    app.get('/message/:id', 로그인했니, function(요청, 응답){
+
       응답.writeHead(200, {
         "Connection": "keep-alive",
-        "Content-Type": "text/event-stream",
+        "Content-Type": "text/event-stream;charset=utf-8",
         "Cache-Control": "no-cache",
       });
-
-      db.collection('message').find({ parent: 요청.params.parentid }).toArray()
+    
+      db.collection('message').find({ parent : 요청.params.id }).toArray()
       .then((결과)=>{
-        console.log(결과);
         응답.write('event: test\n');
-        응답.write(`data: ${JSON.stringify(결과)}\n\n`);//실시간으로는 문자만 전송가능하기때문에 JSON.stringify를 이용해서 변환시켜 전송
+        응답.write('data:'+ JSON.stringify(결과) + '\n\n');
       });
     
+    
+      const 찾을문서 = [
+        { $match: { 'fullDocument.parent': 요청.params.parentid } }
+      ];
+      const collection = db.collection('message');
+      const changeStream = collection.watch(찾을문서);
+
+      changeStream.on('change', (result) => {
+        응답.write('event: test\n');
+        응답.write('data: ' + JSON.stringify([result.fullDocument]) + '\n\n');
+      });
+     
     });
